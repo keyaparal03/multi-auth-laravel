@@ -39,4 +39,17 @@ class AdminLoginController extends Controller
     {
         $this->middleware('guest:admin')->except('logout');
     }
+    public function logout(Request $request)
+    {
+        // echo "test";
+        // die;
+
+        Auth::guard('admin')->logout();
+
+        $request->session()->flush();
+
+        $request->session()->regenerate();
+
+        return redirect()->guest(route( 'admin.login' ));
+    }
 }
